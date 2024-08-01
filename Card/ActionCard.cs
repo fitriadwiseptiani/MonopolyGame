@@ -127,6 +127,7 @@ public class YourBuildingLoanMatures : ICardChance
 	public bool ActionCard(IPlayer player, GameController game)
 	{
 		PlayerData playerData= game.GetPlayerData(player);
+		playerData.AddBalance(150);
 		return true;
 	}
 }
@@ -139,6 +140,7 @@ public class BankPaysYouDividend : ICardChance
 	public bool ActionCard(IPlayer player, GameController game)
 	{
 		PlayerData playerData= game.GetPlayerData(player);
+		playerData.AddBalance(50);
 		return true;
 	}
 }
@@ -163,6 +165,7 @@ public class BuildingAndLoanAssociation: ICardChance
 	public bool ActionCard(IPlayer player, GameController game)
 	{
 		PlayerData playerData= game.GetPlayerData(player);
+		playerData.AddBalance(150);
 		return true;
 	}
 }
@@ -187,6 +190,7 @@ public class SpeedingFine : ICardChance
 	public bool ActionCard(IPlayer player, GameController game)
 	{
 		PlayerData playerData= game.GetPlayerData(player);
+		playerData.DeductBalance(15);
 		return true;
 	}
 }

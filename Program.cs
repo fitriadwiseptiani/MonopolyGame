@@ -19,6 +19,38 @@ using System.Text.Json;
 		
 // 	// }
 // }
+
+// public class ListOfUtilities
+// {
+// 	public int Id { get; set; }
+// 	public string Name{ get; set; }
+// 	public int Price{ get; set; }
+// 	public int RentPrice{get; set;}
+// 	public ListOfUtilities(int id, string name, int price, int rentPrice)
+// 	{
+// 		Id = id;
+// 		Name = name;
+// 		Price = price;
+// 		RentPrice = rentPrice;
+// 	}
+// 	public ListOfUtilities(){}
+	
+// }
+
+// public class ListOfRailroads
+// {
+// 	public int Id { get; set; }
+// 	public string Name{ get; set; }
+// 	public int Price{ get; set; }
+// 	public int RentPrice{get; set;}
+// 	public ListOfRailroads(int id, string name, int price, int rentPrice)
+// 	{
+// 		Id = id;
+// 		Name = name;
+// 		Price = price;
+// 		RentPrice = rentPrice;
+// 	}
+// }
 class Program
 {
 	static void Main()
@@ -29,23 +61,23 @@ class Program
 		{
 			result = sr.ReadToEnd();
 		}
-		List<ListOfCity> cityMonopoly = JsonSerializer.Deserialize<List<ListOfCity>>(result);
+		List<City> cityMonopoly = JsonSerializer.Deserialize<List<City>>(result);
 		
 		string result2;
 		
 		using(StreamReader sr = new("./Utilities.json")) 
 		{
-			result = sr.ReadToEnd();
+			result2 = sr.ReadToEnd();
 		}
-		List<ListOfUtilities> utilitiesMonopoly = JsonSerializer.Deserialize<List<ListOfCity>>(result2);
+		List<ListOfUtilities> utilitiesMonopoly = JsonSerializer.Deserialize<List<ListOfUtilities>>(result2);
 		
 		string result3;
 		
 		using(StreamReader sr = new("./Utilities.json")) 
 		{
-			result = sr.ReadToEnd();
+			result3 = sr.ReadToEnd();
 		}
-		List<ListOfRailroads> railroadsMonopoly = JsonSerializer.Deserialize<List<ListOfCity>>(result3);
+		List<ListOfRailroads> railroadsMonopoly = JsonSerializer.Deserialize<List<ListOfRailroads>>(result3);
 		
 		
 	}	

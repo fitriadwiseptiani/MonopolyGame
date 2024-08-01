@@ -2,10 +2,8 @@ namespace MonopolyGame;
 
 public class Railroads
 {
-	public int Id {get; private set;}
-	public string Name {get; private set;}
-	public decimal Price {get; private set;}
-	public decimal RentPrice {get; private set;}
+	public List<Railroads> listOfRailroads;
+
 	public IPlayer Owner {get; set;}
 	
 	public Railroads(string name, decimal price, decimal rent)
