@@ -6,9 +6,10 @@ class Program
 	static void Main()
 	{
 		Board board = new Board(40);
-        board.InitializeBoard();
+		board.InitializeBoard();
 
-		IDice dice = new Dice();
+		Dice dice = new Dice(6);
+		Console.WriteLine(dice.RollTwoDice(out int firstRoll, out int secondRoll));
 
 		GameController gameController = new GameController(board, dice, GameStatus.Preparation);
 		

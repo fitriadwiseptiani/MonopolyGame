@@ -1,1 +1,26 @@
-[{"Id":6,"Name":"TLV Airport","Price":200,"RentPrice":25},{"Id":16,"Name":"MUC Airport","Price":200,"RentPrice":25},{"Id":26,"Name":"CDG Airport","Price":200,"RentPrice":25},{"Id":36,"Name":"JFK Airport","Price":200,"RentPrice":25}]
+[
+    {
+        "Id": 6,
+        "Name": "TLV Airport",
+        "Price": 200,
+        "RentPrice": 25
+    },
+    {
+        "Id": 16,
+        "Name": "MUC Airport",
+        "Price": 200,
+        "RentPrice": 25
+    },
+    {
+        "Id": 26,
+        "Name": "CDG Airport",
+        "Price": 200,
+        "RentPrice": 25
+    },
+    {
+        "Id": 36,
+        "Name": "JFK Airport",
+        "Price": 200,
+        "RentPrice": 25
+    }
+]
