@@ -14,28 +14,34 @@ public class GameController
 	public Action<IPlayer, Property> RentProperty;
 	public Action<IPlayer, ICard> HandleCard;
 
-
-	public GameController(IBoard board, IDice dice, Bank bank, GameStatus gameStatus, int maxPlayer = 8)
+	private List<ICard> _chanceCards;
+	private List<ICard> _communityCards;
+	public GameController(IBoard board, IDice dice, GameStatus gameStatus, int maxPlayer = 8)
 	{
 		_maxPlayer = maxPlayer;
 		_board = board;
+		_dice = dice;
+
 	}
-	// public Board GetBoard()
-	// {
-	//     return (Board)_board;
-	// }
+	public Board GetBoard()
+	{
+	    return (Board)_board;
+	}
 	public bool Start(){
-		return _gameStatus == GameStatus.Play;
+		if(_gameStatus == GameStatus.Preparation){
+			SetGameStatus(GameStatus.Play);
+			return true;
+		}
+		return false;
 	}
 	public bool End(){
 		return _gameStatus == GameStatus.End;
 	}
-	public SetGameStatus(GameStatus status){
-		_gameStatus = status;
-		
+	public void SetGameStatus(GameStatus status){
+		return _gameStatus = status;
 	}
 	public GetGameStatus(){
-
+		return _gameStatus;
 	}
 	public bool SetNumPlayer(int numPlayer){
 
@@ -62,7 +68,7 @@ public class GameController
 	}
 	public int RollDice()
 	{
-
+		return _dice.Roll();
 	}
 	public bool MovePlayer(IPlayer player, ISquare idSquare, IDice rollResult)
 	{

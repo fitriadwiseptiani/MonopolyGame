@@ -5,23 +5,23 @@ public class PlayerData
     public PlayerPieces Piece;
 	public decimal Balance {get; private set;}
 	public List<Property> PropertyPlayer;
-    public List<CardChance> CardChanceSave;
+    public List<ICard> CardChanceSave;
     public ISquare playerPosition;
 
     public PlayerData(PlayerPieces piece, decimal money){
         Piece = piece;
         Balance = money;
         PropertyPlayer = new List<Property>();
-        CardChanceSave = new List<CardChance>();
+        CardChanceSave = new List<ICard>();
     }
     public bool HaveAdvanceToGoCard(){
         // untuk mengetahuinya dari riwayat mendapatkan cardchance
         // periksa apakah pemain memiliki kartu "advance to go"
-        return CardChanceSave.Any(card.AdvanceToGoCard);
+        return CardChanceSave.OfType<AdvanceToGo>().Any();
     }
     public bool HaveJailFreeCard()
     {
-        return true;
+        return CardChanceSave.OfType<GetOutOfJailFree>().Any();
     }
     public void AddBalance(decimal cash)
     {
@@ -30,5 +30,8 @@ public class PlayerData
     public void DeductBalance(decimal cash)
     {
         Balance -= cash;
+    }
+    public void SetPosition(ISquare newPosition){
+        playerPosition = newPosition;
     }
 }

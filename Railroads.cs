@@ -1,24 +1,41 @@
 namespace MonopolyGame;
 
-public class Railroads
+public class Railroads : Property
 {
-	public List<Railroads> listOfRailroads;
+	public decimal RentPrice { get; private set; }
 
-	public IPlayer Owner {get; set;}
-	
-	public Railroads(string name, decimal price, decimal rent)
-	{
-	}
-	public virtual bool EffecSquare(IPlayer player)
-	{
-		return true;
-	}
-	public virtual bool Buy(IPlayer player)
-	{
-		return true;
-	}
-	public virtual bool Rent(IPlayer player, GameController game)
-	{
-		return true;
-	}
+    public Railroads(int id, string name, decimal price, decimal rentPrice)
+        : base(id, name, price, rentPrice)
+    {
+        RentPrice = rentPrice;
+    }
+
+    public override bool EffectSquare(IPlayer player, GameController game)
+    {
+        PlayerData playerData = game.GetPlayerData(player);
+
+        // Jika properti dimiliki oleh orang lain, maka bayar sewa
+        if (Owner != null && Owner != player)
+        {
+            PayRent(player, game);
+            return true;
+        }
+
+        // Jika properti tidak dimiliki, maka bisa ddibeli pemain
+        if (Owner == null && playerData.Balance >= Price)
+        {
+            BuyProperty(player, game);
+            return true;
+        }
+
+        return false;
+    }
+
+    protected override void PayRent(IPlayer player, GameController game)
+    {
+        PlayerData playerData = game.GetPlayerData(player);
+        playerData.DeductBalance(RentPrice);
+        PlayerData ownerData = game.GetPlayerData(Owner);
+        ownerData.AddBalance(RentPrice);
+    }
 }

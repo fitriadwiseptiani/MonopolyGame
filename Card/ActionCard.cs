@@ -9,9 +9,9 @@ public class AdvanceToGo : ICardChance
 
 	public bool ActionCard(IPlayer player, GameController game)
 	{
-		PlayerData playerData= game.GetPlayerData(player);
-		// game.MovePlayer(player, game.board, null);
-		playerData.AddBalance(200);
+		var goSquare = game.GetBoard().SquareBoard.First(s => s is GoSquare); // Pindahkan pemain ke Go
+        game.MovePlayer(player, goSquare, null); // Pindahkan pemain ke posisi Go
+        game.GetPlayerData(player).AddBalance(200);
 		return true;
 	}
 }
@@ -23,7 +23,6 @@ public class GoToJail : ICardChance
 
 	public bool ActionCard(IPlayer player, GameController game)
 	{
-		PlayerData playerData= game.GetPlayerData(player);
 		game.HandleGoToJail(player);
 		return true;
 	}
@@ -36,7 +35,6 @@ public class GetOutOfJailFree : ICardChance
 
 	public bool ActionCard(IPlayer player, GameController game)
 	{
-		PlayerData playerData= game.GetPlayerData(player);
 		game.HandleGetOutJail(player);
 		return true;
 	}
@@ -63,10 +61,8 @@ public class GoBackThreeSquare : ICardChance
 
 	public bool ActionCard(IPlayer player, GameController game)
 	{
-		PlayerData playerData= game.GetPlayerData(player);
-		// int back = game.board[]-3;
-		// game.MovePlayer(player, game.Board[], null)
-		return true;
+		var currentPosition = player.SetPosition.Id;
+        return true;
 	}
 }
 public class AdvanceToIllinoisAvenue : ICardChance
@@ -77,9 +73,9 @@ public class AdvanceToIllinoisAvenue : ICardChance
 
 	public bool ActionCard(IPlayer player, GameController game)
 	{
-		PlayerData playerData= game.GetPlayerData(player);
-		// game.MovePlayer(player, game.);
-		return true;
+		var illinoisAvenue = game.GetBoard().SquareBoard.First(s => s is Property && s.Name == "Illinois Avenue");
+        game.MovePlayer(player, illinoisAvenue, null); // Pindahkan pemain ke Illinois Avenue
+        return true;
 	}
 }
 public class AdvanceToStCharlesPlace : ICardChance
@@ -126,8 +122,7 @@ public class YourBuildingLoanMatures : ICardChance
 
 	public bool ActionCard(IPlayer player, GameController game)
 	{
-		PlayerData playerData= game.GetPlayerData(player);
-		playerData.AddBalance(150);
+		game.GetPlayerData(player).AddBalance(150);
 		return true;
 	}
 }
@@ -152,7 +147,8 @@ public class PayEachPlayer: ICardChance
 
 	public bool ActionCard(IPlayer player, GameController game)
 	{
-		PlayerData playerData= game.GetPlayerData(player);
+		var amount = 50;
+		
 		return true;
 	}
 }
