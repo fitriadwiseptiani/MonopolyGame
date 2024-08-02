@@ -1,6 +1,6 @@
 namespace MonopolyGame;
 
-public class Utilities : Property
+public class Utilities : Property, ISquare
 {
 	public decimal RentPrice { get; private set; }
 

@@ -9,10 +9,11 @@ public class GameController
 	private GameStatus _gameStatus;
 	private Dictionary<IPlayer, PlayerData> _player;
 	public List<IPlayer> turnToPlay;
-	public Action<IPlayer, ISquare, IDice> MovePlayer;
+	// public Action<IPlayer, ISquare, IDice> MovePlayer;
 	public Action<IPlayer, Property> BuyProperty;
 	public Action<IPlayer, Property> RentProperty;
 	public Action<IPlayer, ICard> HandleCard;
+	public event Action<int, int, int> OnDiceRolled;
 
 	private List<ICardChance> _chanceCards;
 	private List<ICardCommunity> _communityCards;
@@ -34,11 +35,18 @@ public class GameController
 		return (Board)_board;
 	}
 	public bool Start(){
-		if(_gameStatus == GameStatus.Preparation){
-			SetGameStatus(GameStatus.Play);
-			return true;
-		}
-		return false;
+		if (_gameStatus == GameStatus.Play)
+            {
+                // Lempar dadu dan dapatkan hasilnya
+                int firstRoll, secondRoll;
+                int totalRoll = _dice.RollTwoDice(out firstRoll, out secondRoll);
+
+                // Panggil event dengan hasil lemparan dadu
+                OnDiceRolled?.Invoke(firstRoll, secondRoll, totalRoll);
+
+                return true;
+            }
+            return false;
 	}
 	public bool End(){
 		return _gameStatus == GameStatus.End;
@@ -74,25 +82,25 @@ public class GameController
 	public bool AddPlayer(IPlayer player){
 		if(!_player.ContainsKey(player) && _player.Count <= _maxPlayer)
 		{
-			_player[player] = new PlayerData(PlayerPieces playerpc, decimal amount);
+			_player[player] = new PlayerData(PlayerPieces.Battleship, 5000);
 			turnToPlay.Add(player);
 			return true;
 		}
 		return false;
 	}
 	public IPlayer GetPlayer(int idPlayer){
-		
+		return turnToPlay.FirstOrDefault(p => p.Id == idPlayer);
 	}
 	public PlayerData GetPlayerData(IPlayer player){
 		return _player[player];
 	} 
-	public SetStartPlayerPosition(IBoard board, IPlayer player)
+	public bool SetStartPlayerPosition(IBoard board, IPlayer player)
 	{
-		
+		return true;
 	}
-	public SetTurnPlayer(List<IPlayer>players)
+	public void SetTurnPlayer(List<IPlayer> players)
 	{
-		turnToPlay = _player;
+		turnToPlay = players;
 		
 	}
 	public bool StartTurn(){
@@ -109,7 +117,8 @@ public class GameController
 	}
 	public bool MovePlayer(IPlayer player, ISquare idSquare, IDice rollResult)
 	{
-		var positionPlayer = new PlayerData();
+		// var positionPlayer = new PlayerData();
+		return true;
 	}
 	public bool EndTurn()
 	{
@@ -134,11 +143,12 @@ public class GameController
 	}
 	public bool HandleGoToJail(IPlayer player)
 	{ 
-		
+		// GetPlayerData(player).SetPosition(ISquare newPosition) => 
+		return true;
 	}
 	public bool HandleGetOutJail(IPlayer player)
 	{
-
+		return true;
 	}
 	public bool PayTax (IPlayer player, decimal amountOfMoney)
 	{
@@ -153,24 +163,33 @@ public class GameController
 	// {
 
 	// }
-	public void DeclareBankrupt(IPlayer player)
+	public bool DeclareBankrupt(IPlayer player)
 	{
-		if(player.GetBalance(player) is null)
+		if (GetPlayerData(player).Balance == 0)
 		{
-			
+			Console.WriteLine($"{player.Name} telah bankrupt");
+			return true;
 		}
-		return _player[player];
+		return false;
+		
 	}
-	public IPlayer void CheckWinner()
-	{
-
-	}
+	// public IPlayer void CheckWinner()
+	// {
+	// 	return player;
+	// }
 	public ICard DrawCardChance(){
 		Random rdm = new Random();
-		
+		int index = rdm.Next(_chanceCards.Count);
+		ICard card= _chanceCards[index];
+		_chanceCards.RemoveAt(index);
+		return card;
 	}
 	public ICard DrawCardCommunity()
 	{
 		Random rdm = new Random();
+		int index = rdm.Next(_communityCards.Count);
+		ICard card= _communityCards[index];
+		_communityCards.RemoveAt(index);
+		return card;
 	}
 }
